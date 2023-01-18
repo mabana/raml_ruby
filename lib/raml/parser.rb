@@ -7,7 +7,10 @@ module Raml
       def parse(data, file_dir=Dir.getwd)
         register_include_tag
         
-        data = YAML.load data
+        data = YAML.load(
+          data,
+          permitted_classes: [Raml::Parser::Include]
+        )
         expand_includes data, file_dir
 
         Root.new data
